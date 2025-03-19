@@ -28,5 +28,11 @@ Execute o seguinte comando para instalar as dependências necessárias:
 ### Instalar as dependências do projeto
 `make install-deps`
 
-### Executar o projeto
+### Executar o projeto localmente
 `make run`
+
+### Executar o projeto localmente utilizando Docker
+`make run-container`
+
+### Executar os testes
+`make test`
