@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "validate-jwt"
+version = "0.1.0"
+description = ""
+authors = ["João Paulo Nogueira <jprnogueira@yahoo.com.br>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.11"
+uvicorn = "^0.34.0"
+pydantic = "^2.10.6"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+black = "^25.1.0"
+pre-commit = "^4.2.0"
+ruff = "^0.11.0"
+httpx = "^0.28.1"
+pytest-asyncio = "^0.25.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    ".gitignore",
+    ".git",
+]
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
