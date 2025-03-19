@@ -27,3 +27,6 @@ Execute o seguinte comando para instalar as dependências necessárias:
 
 ### Instalar as dependências do projeto
 `make install-deps`
+
+### Executar o projeto
+`make run`
