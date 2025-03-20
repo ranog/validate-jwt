@@ -23,7 +23,7 @@ Execute o seguinte comando para instalar as dependências necessárias:
 `poetry env use 3.12.3`
 
 ### Ativar o ambiente virtual
-`eval $(poetry env activate)`
+`source $(poetry env info --path)/bin/activate`
 
 ### Instalar as dependências do projeto
 `make install-deps`
