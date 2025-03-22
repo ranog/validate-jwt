@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.entrypoints.handlers.general import health_check
+from src.entrypoints.handlers.management import health_check
 
 management_router = APIRouter()
 
