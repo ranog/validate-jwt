@@ -11,7 +11,7 @@ env:
   ECS_SERVICE_NAME: validate-jwt-prod
   ECS_TASK_DEFINITION: ecs-task-definition.json
   CONTAINER_NAME: validate-jwt
-  IMAGE_REPO_NAME: validate-jwt
+  IMAGE_REPO_NAME: validate-jwt-prod
   ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
 
 jobs:
