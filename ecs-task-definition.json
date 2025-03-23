@@ -16,7 +16,15 @@
           "protocol": "tcp"
         }
       ],
-      "essential": true
+      "essential": true,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/validate-jwt",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     }
   ]
 }
