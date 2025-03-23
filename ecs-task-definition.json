@@ -8,7 +8,7 @@
   "containerDefinitions": [
     {
       "name": "validate-jwt",
-      "image": "<IMAGE>",
+      "image": "<IMAGE_URI>",
       "portMappings": [
         {
           "containerPort": 8000,
