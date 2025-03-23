@@ -15,20 +15,136 @@ env:
   ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
 
 jobs:
+  dependencies:
+    name: Dependencies
+    runs-on: small-runner-on-demand
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install build essential
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.venv
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Create virtual environment
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: python -m venv .venv
+
+      - name: Export virtual environment
+        run: echo '${{ github.workspace }}/.venv/bin' >> $GITHUB_PATH
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          pip install poetry
+          poetry config virtualenvs.create false
+          poetry install
+
+      - name: Export requirements.txt
+        run: poetry export -vv --without-hashes --no-ansi --no-interaction --format requirements.txt --output requirements.txt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: requirements.txt
+          path: requirements.txt
+
+  tests:
+    name: Tests
+    runs-on: small-runner-on-demand
+    needs: dependencies
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install build essential
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - run: mkdir -p ~/image-cache
+
+      - name: Cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.venv
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Create virtual environment
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: python -m venv .venv
+
+      - name: Export virtual environment
+        run: echo '${{ github.workspace }}/.venv/bin' >> $GITHUB_PATH
+
+      - name: Pytest Coverage
+        run: pytest --cov=src tests/ --cov-fail-under 90
+
+  qa-general:
+    name: QA General
+    runs-on: small-runner-on-demand
+    needs: dependencies
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install build essential
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.venv
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Create virtual environment
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: python -m venv .venv
+
+      - name: Export virtual environment
+        run: echo '${{ github.workspace }}/.venv/bin' >> $GITHUB_PATH
+
+      - name: Running Ruff
+        run: ruff check .
+
+      - name: Running Black
+        run: black -v --check src/ tests/
+
   deploy:
     name: Deploy to STG
-    runs-on: ubuntu-latest
+    runs-on: small-runner-on-demand
     environment: stg
+    needs: [tests, qa-general]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Print AWS Region
-        run: echo $AWS_REGION
-
-      - name: Print GitHub Secrets
-        run: echo ${{ secrets.AWS_ACCESS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
