@@ -109,7 +109,7 @@ jobs:
 
       - name: Fill in the new image ID in the task definition
         run: |
-          sed -i "s|<IMAGE>|$ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA|g" $ECS_TASK_DEFINITION
+          sed -i "s|<IMAGE_URI>|$ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA|g" $ECS_TASK_DEFINITION
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
