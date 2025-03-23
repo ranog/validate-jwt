@@ -39,3 +39,4 @@ Após executar o projeto, a documentação interativa estará disponível nos se
 - ReDoc: [http://127.0.0.1:8080/redoc](http://127.0.0.1:8080/redoc)
 
 Essas interfaces permitem visualizar os endpoints, testar requisições e entender melhor os contratos da API.
+# test
