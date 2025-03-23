@@ -84,6 +84,7 @@ jobs:
   deploy:
     name: Deploy to STG
     runs-on: ubuntu-latest
+    environment: AWS_KEYS
     needs: [tests, qa]
 
     steps:
