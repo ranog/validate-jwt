@@ -41,10 +41,27 @@ jobs:
           name: requirements.txt
           path: requirements.txt
 
+  qa:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    needs: dependencies
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install tools
+        run: pip install ruff black
+
+      - name: Lint with Ruff
+        run: ruff check .
+
+      - name: Check formatting with Black
+        run: black --check src/ tests/
+
   tests:
     name: Run Tests
     runs-on: ubuntu-latest
-    needs: dependencies
+    needs: qa
 
     steps:
       - uses: actions/checkout@v3
@@ -63,23 +80,6 @@ jobs:
       - name: Run tests with coverage
         run: |
           pytest --cov=src tests/ --cov-fail-under=90
-
-  qa:
-    name: Code Quality
-    runs-on: ubuntu-latest
-    needs: dependencies
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install tools
-        run: pip install ruff black
-
-      - name: Lint with Ruff
-        run: ruff check .
-
-      - name: Check formatting with Black
-        run: black --check src/ tests/
 
   deploy:
     name: Deploy to STG
