@@ -4,10 +4,11 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "256",
   "memory": "512",
+  "executionRoleArn": "arn:aws:iam::231711413035:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "name": "validate-jwt",
-      "image": "<IMAGE_URI>",
+      "image": "<IMAGE>",
       "portMappings": [
         {
           "containerPort": 8000,
