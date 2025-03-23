@@ -33,20 +33,20 @@ async def test_should_return_false_when_passed_invalid_jwt(test_client, jwt):
 
 
 @pytest.mark.asyncio
-async def test_should_return_false_when_jwt_is_not_provided(test_client):
+async def test_should_return_status_code_422_when_jwt_is_not_provided(test_client):
     response = test_client.post("/validate-jwt", json={})
 
-    assert response.status_code == 200
-    assert response.json() == {"valid": False, "error": "JWT not provided"}
-
-
-@pytest.mark.asyncio
-async def test_should_return_log_message_when_jwt_is_not_provided(test_client, caplog):
-    caplog.set_level(logging.WARNING)
-
-    test_client.post("/validate-jwt", json={})
-
-    assert "JWT not provided" in caplog.text
+    assert response.status_code == 422
+    assert response.json() == {
+        "detail": [
+            {
+                "input": {},
+                "loc": ["body", "jwt"],
+                "msg": "Field required",
+                "type": "missing",
+            },
+        ],
+    }
 
 
 @pytest.mark.asyncio
