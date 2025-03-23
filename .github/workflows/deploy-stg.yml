@@ -61,7 +61,7 @@ jobs:
   tests:
     name: Run Tests
     runs-on: ubuntu-latest
-    needs: qa
+    needs: [dependencies, qa]
 
     steps:
       - uses: actions/checkout@v3

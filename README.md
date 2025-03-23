@@ -31,8 +31,11 @@ Execute o seguinte comando para instalar as dependências necessárias:
 ### Executar o projeto localmente
 `make run`
 
-### Executar o projeto localmente utilizando Docker
-`make run-container`
+### Acessar a documentação da API
 
-### Executar os testes
-`make test`
+Após executar o projeto, a documentação interativa estará disponível nos seguintes endereços:
+
+- Swagger UI: [http://127.0.0.1:8080/docs](http://127.0.0.1:8080/docs)
+- ReDoc: [http://127.0.0.1:8080/redoc](http://127.0.0.1:8080/redoc)
+
+Essas interfaces permitem visualizar os endpoints, testar requisições e entender melhor os contratos da API.
