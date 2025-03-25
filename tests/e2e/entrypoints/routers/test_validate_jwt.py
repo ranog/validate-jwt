@@ -3,7 +3,6 @@ import pytest
 import logging
 
 
-@pytest.mark.asyncio
 async def test_should_return_true_when_passed_valid_jwt(test_client):
     response = test_client.post(
         "/validate-jwt",
@@ -13,10 +12,9 @@ async def test_should_return_true_when_passed_valid_jwt(test_client):
     )
 
     assert response.status_code == 200
-    assert response.json() == {"valid": True}
+    assert response.json() is True
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "jwt",
     [
@@ -29,10 +27,9 @@ async def test_should_return_false_when_passed_invalid_jwt(test_client, jwt):
     response = test_client.post("/validate-jwt", json={"jwt": jwt})
 
     assert response.status_code == 200
-    assert response.json() == {"valid": False}
+    assert response.json() is False
 
 
-@pytest.mark.asyncio
 async def test_should_return_status_code_422_when_jwt_is_not_provided(test_client):
     response = test_client.post("/validate-jwt", json={})
 
@@ -49,7 +46,6 @@ async def test_should_return_status_code_422_when_jwt_is_not_provided(test_clien
     }
 
 
-@pytest.mark.asyncio
 async def test_should_return_log_message_when_invalid_jwt_is_provided(test_client, caplog):
     caplog.set_level(logging.WARNING)
 
@@ -58,7 +54,6 @@ async def test_should_return_log_message_when_invalid_jwt_is_provided(test_clien
     assert "Invalid JWT" in caplog.text
 
 
-@pytest.mark.asyncio
 async def test_should_return_log_message_when_jwt_is_provided(test_client, caplog):
     caplog.set_level(logging.INFO)
 
@@ -73,3 +68,18 @@ async def test_should_return_log_message_when_jwt_is_provided(test_client, caplo
         "Validating JWT: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJTZWVkIjoiNzg0MSIsIk5hbWUiOiJUb25pbmhvIEFyYXVqbyJ9.QY05sIjtrcJnP533kQNk8QXcaleJ1Q01jWY_ZzIZuAg"
         in caplog.text
     )
+
+
+async def test_should_return_false_when_empty_jwt_is_provided(test_client):
+    response = test_client.post("/validate-jwt", json={"jwt": ""})
+
+    assert response.status_code == 200
+    assert response.json() is False
+
+
+async def test_should_return_invalid_jwt_log_message_when_provided_jwt_is_empty(test_client, caplog):
+    caplog.set_level(logging.WARNING)
+
+    test_client.post("/validate-jwt", json={"jwt": ""})
+
+    assert "Invalid JWT" in caplog.text

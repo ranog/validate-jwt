@@ -15,17 +15,13 @@ class ValidateJWTRequest(BaseModel):
 
 async def validate_jwt_handler(validate_jwt_request: ValidateJWTRequest):
     try:
-        if not validate_jwt_request.jwt:
-            logger.warning("JWT not provided")
-            return JSONResponse(content={"valid": False, "error": "JWT not provided"}, status_code=status.HTTP_200_OK)
-
         logger.info(f"Validating JWT: {validate_jwt_request.jwt}")
 
         jwt_claims_dict = extract_jwt_claims(validate_jwt_request.jwt)
         JWTClaims(**jwt_claims_dict)
 
-        return JSONResponse(content={"valid": True}, status_code=status.HTTP_200_OK)
+        return JSONResponse(content=True, status_code=status.HTTP_200_OK)
 
     except (ValueError, ValidationError, KeyError) as e:
         logger.warning(f"Invalid JWT: {str(e)}")
-        return JSONResponse(content={"valid": False}, status_code=status.HTTP_200_OK)
+        return JSONResponse(content=False, status_code=status.HTTP_200_OK)
