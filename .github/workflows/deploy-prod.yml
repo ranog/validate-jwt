@@ -41,8 +41,8 @@ jobs:
           name: requirements.txt
           path: requirements.txt
 
-  rebase-master-on-dev:
-    name: Rebase master on dev
+  rebase-main-on-dev:
+    name: Rebase main on dev
     runs-on: ubuntu-latest
 
     steps:
@@ -51,8 +51,8 @@ jobs:
         with:
           ref: dev
 
-      - name: Rebase master on dev
-        run: git pull --rebase origin master
+      - name: Rebase main on dev
+        run: git pull --rebase origin main
 
       - name: Push changes
         run: git push --force-with-lease
