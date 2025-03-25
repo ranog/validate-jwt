@@ -43,7 +43,7 @@ jobs:
 
   rebase-master-on-dev:
     name: Rebase master on dev
-    runs-on: small-runner-on-demand
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
