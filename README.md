@@ -31,11 +31,18 @@ Execute o seguinte comando para instalar as dependências necessárias:
 ### Executar o projeto localmente
 `make run`
 
-### Acessar a documentação da API
+### Acessar Swagger UI e ReDoc - Local
 
 Após executar o projeto, a documentação interativa estará disponível nos seguintes endereços:
 
 - Swagger UI: [http://127.0.0.1:8080/docs](http://127.0.0.1:8080/docs)
 - ReDoc: [http://127.0.0.1:8080/redoc](http://127.0.0.1:8080/redoc)
+
+### Acessar Swagger UI e ReDoc - Online
+
+A documentação interativa estará disponível nos seguintes endereços:
+
+- Swagger UI: [http://validate-jwt-stg-alb-290239625.us-west-2.elb.amazonaws.com/docs](...)
+- ReDoc: [http://validate-jwt-stg-alb-290239625.us-west-2.elb.amazonaws.com/redoc](...)
 
 Essas interfaces permitem visualizar os endpoints, testar requisições e entender melhor os contratos da API.

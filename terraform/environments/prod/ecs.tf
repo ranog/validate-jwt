@@ -41,6 +41,14 @@ resource "aws_ecs_task_definition" "app" {
           protocol      = "tcp"
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = "/ecs/${var.app_name}"
+          awslogs-region        = "us-west-2"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     }
   ])
 }
