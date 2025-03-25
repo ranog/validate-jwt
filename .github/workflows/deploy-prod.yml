@@ -107,15 +107,3 @@ jobs:
           docker tag $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA $ECR_REGISTRY/$IMAGE_REPO_NAME:latest
           docker push $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA
           docker push $ECR_REGISTRY/$IMAGE_REPO_NAME:latest
-
-      - name: Fill in the new image ID in the task definition
-        run: |
-          sed -i "s|<IMAGE_URI>|$ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA|g" $ECS_TASK_DEFINITION
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          service: ${{ env.ECS_SERVICE_NAME }}
-          cluster: ${{ env.ECS_CLUSTER_NAME }}
-          wait-for-service-stability: true
