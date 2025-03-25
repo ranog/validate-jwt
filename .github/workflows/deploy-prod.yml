@@ -97,6 +97,7 @@ jobs:
 
   terraform:
     uses: ./.github/workflows/deploy-infra.yml
+    secrets: inherit
 
   deploy:
     name: Deploy to PROD
