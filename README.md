@@ -37,3 +37,6 @@ Após executar o projeto, a documentação interativa estará disponível nos se
 
 - Swagger UI: [http://127.0.0.1:8080/docs](http://127.0.0.1:8080/docs)
 - ReDoc: [http://127.0.0.1:8080/redoc](http://127.0.0.1:8080/redoc)
+
+### Teste a API com [Insomnia](https://insomnia.rest):
+`insomnia-collection.json`
