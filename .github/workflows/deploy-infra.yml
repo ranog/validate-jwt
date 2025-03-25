@@ -49,4 +49,4 @@ jobs:
       - name: Terraform Apply
         run: |
           cd terraform/environments/${{ steps.set-env.outputs.TF_ENV }}
-          terraform apply -auto-approve -var-file="terraform.tfvars"
+          terraform apply -auto-approve -var-file="terraform.tfvars" -var="image_tag=${GITHUB_SHA}"
