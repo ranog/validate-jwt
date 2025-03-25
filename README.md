@@ -46,3 +46,6 @@ A documentação interativa estará disponível nos seguintes endereços:
 - ReDoc: [http://validate-jwt-stg-alb-290239625.us-west-2.elb.amazonaws.com/redoc](...)
 
 Essas interfaces permitem visualizar os endpoints, testar requisições e entender melhor os contratos da API.
+# test
+# test
+# test
