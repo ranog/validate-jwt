@@ -6,10 +6,9 @@ on:
 
 env:
   AWS_REGION: us-west-2
-  ECS_CLUSTER_NAME: validate-jwt-prod-service
-  ECS_SERVICE_NAME: validate-jwt-prod
-  ECS_TASK_DEFINITION: ecs-task-definition.json
-  CONTAINER_NAME: validate-jwt
+  ECS_CLUSTER_NAME: validate-jwt-prod-cluster
+  ECS_SERVICE_NAME: validate-jwt-prod-service
+  CONTAINER_NAME: validate-jwt-prod
   IMAGE_REPO_NAME: validate-jwt-prod
   ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
 
@@ -102,19 +101,9 @@ jobs:
         with:
           mask-password: true
 
-      - name: Build, tag, and push Docker image to Amazon ECR
+      - name: Build and push Docker image
         run: |
           docker build -t $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA .
+          docker tag $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA $ECR_REGISTRY/$IMAGE_REPO_NAME:latest
           docker push $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA
-
-      - name: Fill in the new image ID in the task definition
-        run: |
-          sed -i "s|<IMAGE_URI>|$ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA|g" $ECS_TASK_DEFINITION
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          service: ${{ env.ECS_SERVICE_NAME }}
-          cluster: ${{ env.ECS_CLUSTER_NAME }}
-          wait-for-service-stability: true
+          docker push $ECR_REGISTRY/$IMAGE_REPO_NAME:latest
