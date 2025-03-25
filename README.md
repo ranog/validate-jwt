@@ -45,7 +45,7 @@ Execute o seguinte comando para instalar as dependências necessárias:
 ### Executar o projeto localmente
 `make run`
 
-### Acessar Swagger UI e ReDoc - Local
+### Acessar Swagger UI e ReDoc - local
 
 Após executar o projeto, a documentação interativa estará disponível nos seguintes endereços:
 
