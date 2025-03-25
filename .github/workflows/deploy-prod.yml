@@ -6,13 +6,14 @@ on:
 
 env:
   AWS_REGION: us-west-2
-  ECS_CLUSTER_NAME: validate-jwt-prod-cluster
-  ECS_SERVICE_NAME: validate-jwt-prod-service
-  CONTAINER_NAME: validate-jwt-prod
   IMAGE_REPO_NAME: validate-jwt-prod
   ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
 
 jobs:
+  terraform:
+    uses: ./.github/workflows/deploy-infra.yml
+    secrets: inherit
+
   dependencies:
     name: Install Dependencies
     runs-on: ubuntu-latest
@@ -94,10 +95,6 @@ jobs:
       - name: Run tests with coverage
         run: |
           pytest --cov=src tests/ --cov-fail-under=90
-
-  terraform:
-    uses: ./.github/workflows/deploy-infra.yml
-    secrets: inherit
 
   deploy:
     name: Deploy to PROD
