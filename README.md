@@ -1,3 +1,17 @@
+# 🔐 Validate JWT API
+
+API REST desenvolvida em [FastAPI](https://fastapi.tiangolo.com/) com o objetivo de validar tokens JWT de forma simples e rápida. Ideal para ser usada como serviço intermediário (middleware) de autenticação.
+
+---
+
+## 🚀 Como Executar o Projeto Localmente
+
+### Pré-requisitos
+
+- Python 3.12.3 (gerenciado com `pyenv`)
+- [Poetry](https://python-poetry.org/docs/#installation)
+- Make (para usar os comandos simplificados)
+
 ## Instalação das Dependências do Projeto
 
 ### LINUX
