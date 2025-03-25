@@ -42,10 +42,13 @@ Após executar o projeto, a documentação interativa estará disponível nos se
 
 A documentação interativa estará disponível nos seguintes endereços:
 
+#### STG
 - Swagger UI: [http://validate-jwt-stg-alb-290239625.us-west-2.elb.amazonaws.com/docs](...)
 - ReDoc: [http://validate-jwt-stg-alb-290239625.us-west-2.elb.amazonaws.com/redoc](...)
 
+#### PRD
+- Swagger UI: [http://validate-jwt-prd-alb-290239625.us-west-2.elb.amazonaws.com/docs](...)
+- ReDoc: [http://validate-jwt-prd-alb-290239625.us-west-2.elb.amazonaws.com/redoc](...)
+
 Essas interfaces permitem visualizar os endpoints, testar requisições e entender melhor os contratos da API.
-# test
-# test
-# test
+
