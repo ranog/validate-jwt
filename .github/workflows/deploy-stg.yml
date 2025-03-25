@@ -9,7 +9,6 @@ env:
   AWS_REGION: us-west-2
   ECS_CLUSTER_NAME: validate-jwt-stg-cluster
   ECS_SERVICE_NAME: validate-jwt-stg-service
-  ECS_TASK_DEFINITION: ecs-task-definition.json
   CONTAINER_NAME: validate-jwt-stg
   IMAGE_REPO_NAME: validate-jwt-stg
   ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
@@ -107,15 +106,3 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA .
           docker push $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA
-
-      - name: Prepare ECS task definition
-        run: |
-          sed -i "s|<IMAGE_URI>|$ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA|g" $ECS_TASK_DEFINITION
-
-      - name: Deploy to ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          service: ${{ env.ECS_SERVICE_NAME }}
-          cluster: ${{ env.ECS_CLUSTER_NAME }}
-          wait-for-service-stability: true
