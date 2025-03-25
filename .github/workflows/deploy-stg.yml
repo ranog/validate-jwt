@@ -80,6 +80,9 @@ jobs:
         run: |
           pytest --cov=src tests/ --cov-fail-under=90
 
+  terraform:
+    uses: ./.github/workflows/deploy-infra.yml
+
   deploy:
     name: Deploy to STG
     runs-on: ubuntu-latest
