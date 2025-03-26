@@ -53,43 +53,43 @@ resource "aws_ecs_task_definition" "app" {
   ])
 }
 
-resource "aws_security_group" "ecs" {
-  name   = "${var.app_name}-ecs-sg"
-  vpc_id = aws_vpc.main.id
+# resource "aws_security_group" "ecs" {
+#   name   = "${var.app_name}-ecs-sg"
+#   vpc_id = aws_vpc.main.id
+#
+#   ingress {
+#     from_port   = var.container_port
+#     to_port     = var.container_port
+#     protocol    = "tcp"
+#     security_groups = [aws_security_group.alb.id]
+#   }
+#
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+# }
 
-  ingress {
-    from_port   = var.container_port
-    to_port     = var.container_port
-    protocol    = "tcp"
-    security_groups = [aws_security_group.alb.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_ecs_service" "app" {
-  name            = "${var.app_name}-service"
-  cluster         = aws_ecs_cluster.main.id
-  launch_type     = "FARGATE"
-  task_definition = aws_ecs_task_definition.app.arn
-  desired_count   = 1
-
-  network_configuration {
-    subnets         = aws_subnet.public[*].id
-    security_groups = [aws_security_group.ecs.id]
-    assign_public_ip = true
-  }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.app.arn
-    container_name   = var.app_name
-    container_port   = var.container_port
-  }
-
-  depends_on = [aws_lb_listener.http]
-}
+# resource "aws_ecs_service" "app" {
+#   name            = "${var.app_name}-service"
+#   cluster         = aws_ecs_cluster.main.id
+#   launch_type     = "FARGATE"
+#   task_definition = aws_ecs_task_definition.app.arn
+#   desired_count   = 1
+#
+#   network_configuration {
+#     subnets         = aws_subnet.public[*].id
+#     security_groups = [aws_security_group.ecs.id]
+#     assign_public_ip = true
+#   }
+#
+#   load_balancer {
+#     target_group_arn = aws_lb_target_group.app.arn
+#     container_name   = var.app_name
+#     container_port   = var.container_port
+#   }
+#
+#   depends_on = [aws_lb_listener.http]
+# }
