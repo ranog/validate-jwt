@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # name: Deploy PROD
 
 # on:
@@ -19,91 +18,41 @@
 #    uses: ./.github/workflows/deploy-infra.yml
 #    secrets: inherit
 
-=======
-#name: Deploy PROD
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#permissions:
-#  contents: write
-#
-#env:
-#  AWS_REGION: us-west-2
-#  IMAGE_REPO_NAME: validate-jwt-prod
-#  ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
-#
-#jobs:
-#  terraform:
-#    uses: ./.github/workflows/deploy-infra.yml
-#    secrets: inherit
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #  dependencies:
 #    name: Install Dependencies
 #    runs-on: ubuntu-latest
 #    needs: terraform
-<<<<<<< HEAD
 
 #    steps:
 #      - uses: actions/checkout@v3
 
-=======
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - name: Set up Python
 #        uses: actions/setup-python@v4
 #        with:
 #          python-version: '3.12'
-<<<<<<< HEAD
-
-=======
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - name: Install Poetry
 #        run: |
 #          pip install poetry
 #          poetry config virtualenvs.create false
 #          poetry install
-<<<<<<< HEAD
 
 #      - name: Export requirements.txt
 #        run: poetry export --without-hashes --format=requirements.txt --output=requirements.txt
 
-=======
-#
-#      - name: Export requirements.txt
-#        run: poetry export --without-hashes --format=requirements.txt --output=requirements.txt
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - uses: actions/upload-artifact@v4
 #        with:
 #          name: requirements.txt
 #          path: requirements.txt
-<<<<<<< HEAD
 
 #  rebase-main-on-dev:
 #    name: Rebase main on dev
 #    runs-on: ubuntu-latest
 
-=======
-#
-#  rebase-main-on-dev:
-#    name: Rebase main on dev
-#    runs-on: ubuntu-latest
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #    steps:
 #      - name: Checkout
 #        uses: actions/checkout@v3
 #        with:
 #          ref: dev
-<<<<<<< HEAD
 
 #      - name: Rebase main on dev
 #        run: git pull --rebase origin main
@@ -111,20 +60,10 @@
 #      - name: Push changes
 #        run: git push --force-with-lease
 
-=======
-#
-#      - name: Rebase main on dev
-#        run: git pull --rebase origin main
-#
-#      - name: Push changes
-#        run: git push --force-with-lease
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #  qa:
 #    name: Code Quality
 #    runs-on: ubuntu-latest
 #    needs: dependencies
-<<<<<<< HEAD
 
 #    steps:
 #      - uses: actions/checkout@v3
@@ -138,101 +77,48 @@
 #      - name: Check formatting with Black
 #        run: black --check src/ tests/
 
-=======
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - name: Install tools
-#        run: pip install ruff black
-#
-#      - name: Lint with Ruff
-#        run: ruff check .
-#
-#      - name: Check formatting with Black
-#        run: black --check src/ tests/
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #  tests:
 #    name: Run Tests
 #    runs-on: ubuntu-latest
 #    needs: dependencies
-<<<<<<< HEAD
 
 #    steps:
 #      - uses: actions/checkout@v3
 
-=======
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - name: Set up Python
 #        uses: actions/setup-python@v4
 #        with:
 #          python-version: '3.12'
-<<<<<<< HEAD
-
-=======
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - name: Install Poetry and deps
 #        run: |
 #          pip install poetry
 #          poetry config virtualenvs.create false
 #          poetry install
-<<<<<<< HEAD
 
 #      - name: Run tests with coverage
 #        run: |
 #          pytest --cov=src tests/ --cov-fail-under=90
 
-=======
-#
-#      - name: Run tests with coverage
-#        run: |
-#          pytest --cov=src tests/ --cov-fail-under=90
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #  deploy:
 #    name: Deploy to PROD
 #    runs-on: ubuntu-latest
 #    environment: AWS_KEYS
 #    needs: [ tests, qa ]
-<<<<<<< HEAD
 
 #    steps:
 #      - name: Checkout code
 #        uses: actions/checkout@v3
 
-=======
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - name: Configure AWS credentials
 #        uses: aws-actions/configure-aws-credentials@v2
 #        with:
 #          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
 #          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #          aws-region: ${{ env.AWS_REGION }}
-<<<<<<< HEAD
-
-=======
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - name: Login to Amazon ECR
 #        uses: aws-actions/amazon-ecr-login@v1
 #        with:
 #          mask-password: true
-<<<<<<< HEAD
-
-=======
-#
->>>>>>> 4934e88 (chore: remove pipeline)
 #      - name: Build and push Docker image
 #        run: |
 #          docker build -t $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA .
