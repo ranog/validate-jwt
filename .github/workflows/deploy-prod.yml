@@ -30,7 +30,6 @@
 #        uses: actions/setup-python@v4
 #        with:
 #          python-version: '3.12'
-
 #      - name: Install Poetry
 #        run: |
 #          pip install poetry
@@ -90,7 +89,6 @@
 #        uses: actions/setup-python@v4
 #        with:
 #          python-version: '3.12'
-
 #      - name: Install Poetry and deps
 #        run: |
 #          pip install poetry
@@ -117,12 +115,10 @@
 #          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
 #          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #          aws-region: ${{ env.AWS_REGION }}
-
 #      - name: Login to Amazon ECR
 #        uses: aws-actions/amazon-ecr-login@v1
 #        with:
 #          mask-password: true
-
 #      - name: Build and push Docker image
 #        run: |
 #          docker build -t $ECR_REGISTRY/$IMAGE_REPO_NAME:$GITHUB_SHA .
