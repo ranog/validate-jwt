@@ -10,7 +10,7 @@ jobs:
   deploy-infra:
     name: Apply Terraform
     runs-on: ubuntu-latest
-    environment: AWS_KEYS
+    # environment: AWS_KEYS
 
     # defaults:
     #   run:
