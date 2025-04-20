@@ -11,8 +11,15 @@ on:
     types:
       - completed
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   ci:
     name: Run CI
     uses: ./.github/workflows/ci.yml
+    with:
+      python-version: '3.12'
+    secrets: inherit
     

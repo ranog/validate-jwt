@@ -9,6 +9,17 @@ on:
     branches:
       - dev
       - main
+  workflow_call:
+    inputs:
+      python-version:
+        description: 'Python version to use'
+        required: false
+        default: '3.12'
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   dependencies:
@@ -21,7 +32,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: ${{ inputs.python-version || '3.12' }}
 
       - name: Install Poetry
         run: |
@@ -65,7 +76,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: ${{ inputs.python-version || '3.12' }}
 
       - name: Install Poetry and deps
         run: |
