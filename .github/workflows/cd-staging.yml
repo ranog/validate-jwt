@@ -1,0 +1,17 @@
+name: CD Pipeline - Staging
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    branches:
+      - dev
+    types:
+      - completed
+
+jobs:
+  ci:
+    name: Run CI
+    uses: ./.github/workflows/ci.yml

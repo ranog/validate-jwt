@@ -1,111 +1,111 @@
-name: Deploy PROD
+# name: Deploy PROD
 
-on:
- push:
-   branches:
-     - main
+# on:
+#  push:
+#    branches:
+#      - main
 
-permissions:
- contents: write
+# permissions:
+#  contents: write
 
-env:
- AWS_REGION: us-west-2
- IMAGE_REPO_NAME: validate-jwt-prod
- ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
+# env:
+#  AWS_REGION: us-west-2
+#  IMAGE_REPO_NAME: validate-jwt-prod
+#  ECR_REGISTRY: 231711413035.dkr.ecr.us-west-2.amazonaws.com
 
-jobs:
- terraform:
-   uses: ./.github/workflows/deploy-infra.yml
-   secrets: inherit
+# jobs:
+#  terraform:
+#    uses: ./.github/workflows/deploy-infra.yml
+#    secrets: inherit
 
- dependencies:
-   name: Install Dependencies
-   runs-on: ubuntu-latest
-   needs: terraform
+#  dependencies:
+#    name: Install Dependencies
+#    runs-on: ubuntu-latest
+#    needs: terraform
 
-   steps:
-     - uses: actions/checkout@v3
+#    steps:
+#      - uses: actions/checkout@v3
 
-     - name: Set up Python
-       uses: actions/setup-python@v4
-       with:
-         python-version: '3.12'
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.12'
 
-     - name: Install Poetry
-       run: |
-         pip install poetry
-         poetry config virtualenvs.create false
-         poetry install
+#      - name: Install Poetry
+#        run: |
+#          pip install poetry
+#          poetry config virtualenvs.create false
+#          poetry install
 
-     - name: Export requirements.txt
-       run: poetry export --without-hashes --format=requirements.txt --output=requirements.txt
+#      - name: Export requirements.txt
+#        run: poetry export --without-hashes --format=requirements.txt --output=requirements.txt
 
-     - uses: actions/upload-artifact@v4
-       with:
-         name: requirements.txt
-         path: requirements.txt
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: requirements.txt
+#          path: requirements.txt
 
- rebase-main-on-dev:
-   name: Rebase main on dev
-   runs-on: ubuntu-latest
+#  rebase-main-on-dev:
+#    name: Rebase main on dev
+#    runs-on: ubuntu-latest
 
-   steps:
-     - name: Checkout
-       uses: actions/checkout@v3
-       with:
-         ref: dev
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          ref: dev
 
-     - name: Rebase main on dev
-       run: git pull --rebase origin main
+#      - name: Rebase main on dev
+#        run: git pull --rebase origin main
 
-     - name: Push changes
-       run: git push --force-with-lease
+#      - name: Push changes
+#        run: git push --force-with-lease
 
- qa:
-   name: Code Quality
-   runs-on: ubuntu-latest
-   needs: dependencies
+#  qa:
+#    name: Code Quality
+#    runs-on: ubuntu-latest
+#    needs: dependencies
 
-   steps:
-     - uses: actions/checkout@v3
+#    steps:
+#      - uses: actions/checkout@v3
 
-     - name: Install tools
-       run: pip install ruff black
+#      - name: Install tools
+#        run: pip install ruff black
 
-     - name: Lint with Ruff
-       run: ruff check .
+#      - name: Lint with Ruff
+#        run: ruff check .
 
-     - name: Check formatting with Black
-       run: black --check src/ tests/
+#      - name: Check formatting with Black
+#        run: black --check src/ tests/
 
- tests:
-   name: Run Tests
-   runs-on: ubuntu-latest
-   needs: dependencies
+#  tests:
+#    name: Run Tests
+#    runs-on: ubuntu-latest
+#    needs: dependencies
 
-   steps:
-     - uses: actions/checkout@v3
+#    steps:
+#      - uses: actions/checkout@v3
 
-     - name: Set up Python
-       uses: actions/setup-python@v4
-       with:
-         python-version: '3.12'
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.12'
 
-     - name: Install Poetry and deps
-       run: |
-         pip install poetry
-         poetry config virtualenvs.create false
-         poetry install
+#      - name: Install Poetry and deps
+#        run: |
+#          pip install poetry
+#          poetry config virtualenvs.create false
+#          poetry install
 
-     - name: Run tests with coverage
-       run: |
-         pytest --cov=src tests/ --cov-fail-under=90
+#      - name: Run tests with coverage
+#        run: |
+#          pytest --cov=src tests/ --cov-fail-under=90
 
- deploy:
-   name: Deploy to PROD
-   runs-on: ubuntu-latest
+#  deploy:
+#    name: Deploy to PROD
+#    runs-on: ubuntu-latest
 #    environment: AWS_KEYS
-   needs: [ tests, qa ]
+#    needs: [ tests, qa ]
 
 #    steps:
 #      - name: Checkout code
