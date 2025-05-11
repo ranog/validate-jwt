@@ -1,0 +1,27 @@
+name: Project Automation
+on:
+  issues:
+    types:
+      - opened
+      - edited
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - closed
+jobs:
+  automate-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move issue to "To Do" on creation
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        run: |
+          gh issue edit ${{ github.event.issue.number }} --add-label "To Do"
+      - name: Move issue to "In Progress" on PR open
+        if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+        run: |
+          gh issue edit ${{ github.event.pull_request.number }} --add-label "In Progress"
+      - name: Move issue to "Done" on PR close
+        if: github.event_name == 'pull_request' && github.event.action == 'closed'
+        run: |
+          gh issue edit ${{ github.event.pull_request.number }} --add-label "Done"
