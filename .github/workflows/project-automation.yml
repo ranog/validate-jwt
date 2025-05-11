@@ -17,13 +17,19 @@ jobs:
     steps:
       - name: Move issue to "To Do" on creation
         if: github.event_name == 'issues' && github.event.action == 'opened'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh issue edit ${{ github.event.issue.number }} --add-label "To Do"
       - name: Move issue to "In Progress" on PR open
         if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh issue edit ${{ github.event.pull_request.number }} --add-label "In Progress"
       - name: Move issue to "Done" on PR close
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh issue edit ${{ github.event.pull_request.number }} --add-label "Done"
