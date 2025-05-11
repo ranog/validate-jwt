@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # name: Deploy Terraform Infrastructure
 
 # on:
@@ -50,3 +51,57 @@
 #         run: |
 #           cd terraform/environments/${{ steps.set-env.outputs.TF_ENV }}
 #           terraform apply -auto-approve -var-file="terraform.tfvars" -var="image_tag=${GITHUB_SHA}"
+=======
+#name: Deploy Terraform Infrastructure
+#
+#on:
+#  workflow_call:
+#
+#concurrency:
+#  group: terraform
+#
+#jobs:
+#  deploy-infra:
+#    name: Apply Terraform
+#    runs-on: ubuntu-latest
+#    environment: AWS_KEYS
+#
+#    defaults:
+#      run:
+#        shell: bash
+#
+#    steps:
+#      - name: Checkout Repository
+#        uses: actions/checkout@v3
+#
+#      - name: Set up Terraform
+#        uses: hashicorp/setup-terraform@v3
+#        with:
+#          terraform_version: 1.6.6
+#
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-west-2
+#
+#      - name: Select Terraform environment
+#        id: set-env
+#        run: |
+#          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+#            echo "TF_ENV=prod" >> $GITHUB_OUTPUT
+#          else
+#            echo "TF_ENV=stg" >> $GITHUB_OUTPUT
+#          fi
+#
+#      - name: Initialize Terraform
+#        run: |
+#          cd terraform/environments/${{ steps.set-env.outputs.TF_ENV }}
+#          terraform init
+#
+#      - name: Terraform Apply
+#        run: |
+#          cd terraform/environments/${{ steps.set-env.outputs.TF_ENV }}
+#          terraform apply -auto-approve -var-file="terraform.tfvars" -var="image_tag=${GITHUB_SHA}"
+>>>>>>> 4934e88 (chore: remove pipeline)
