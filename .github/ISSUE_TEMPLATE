@@ -1,0 +1,87 @@
+# Auth-API Project Templates for GitHub Projects
+## Labels Suggestion
+- **backend**: For core API features and architecture.
+- **security**: For security enhancements like JWT validation and encryption.
+- **testing**: For unit, integration, and load tests.
+- **observability**: For logs, metrics, and monitoring.
+- **deployment**: For CI/CD, infrastructure, and scaling.
+---
+## Sprint 1 – Fundamentos e Refatoração Básica (2 semanas)
+### História 1 – Melhorar Segurança do JWT
+- **Task 1:** Implementar suporte a algoritmos assimétricos (RS256/ES256) 
+  - **Subtask:** Migrar do HS256 para RS256 para melhorar a segurança. 
+  - **Subtask:** Criar rota para expor as chaves públicas para validação externa. 
+- **Task 2:** Validar claims padrão do JWT (exp, nbf, iat, aud, iss) 
+  - **Subtask:** Adicionar verificação de tempo de expiração (exp). 
+  - **Subtask:** Implementar validação do campo "issuer" (iss) para garantir autenticidade. 
+### História 2 – Melhoria de Logs e Observabilidade
+- **Task 1:** Adicionar logs estruturados (JSON) para facilitar análise. 
+  - **Subtask:** Adicionar contexto aos logs para rastrear requisições. 
+  - **Subtask:** Configurar níveis de log (info, warning, error). 
+- **Task 2:** Implementar métricas básicas para monitoramento. 
+  - **Subtask:** Expor métricas para Prometheus ou outro sistema de monitoramento. 
+### História 3 – Melhorar a Estrutura do Projeto
+- **Task 1:** Refatorar pastas e módulos para facilitar manutenção. 
+  - **Subtask:** Separar lógica de autenticação, validação e rotas. 
+  - **Subtask:** Criar módulos para futuras extensões (e.g., permissões, roles). 
+---
+## Sprint 2 – Testes e Qualidade do Código (2 semanas)
+### História 4 – Aumentar Cobertura de Testes
+- **Task 1:** Criar testes unitários para lógica de autenticação. 
+  - **Subtask:** Testar funções de hash e verificação de senha. 
+  - **Subtask:** Testar geração e verificação de tokens JWT. 
+- **Task 2:** Criar testes de integração para endpoints principais. 
+  - **Subtask:** Testar fluxos de login e registro. 
+  - **Subtask:** Validar respostas para tokens expirados e inválidos. 
+### História 5 – Implementar Análise Estática de Código
+- **Task 1:** Adicionar ferramentas de linting e formatação. 
+  - **Subtask:** Configurar Ruff para linting rápido. 
+  - **Subtask:** Adicionar Black para formatação consistente. 
+- **Task 2:** Criar passo de verificação automática no CI. 
+  - **Subtask:** Configurar GitHub Actions para executar linting e testes em cada PR. 
+---
+## Sprint 3 – Escalabilidade e Performance (2 semanas)
+### História 6 – Tornar a API Stateless e Escalável
+- **Task 1:** Adicionar caching para validação de tokens. 
+  - **Subtask:** Configurar Redis para armazenamento temporário. 
+  - **Subtask:** Criar chave de cache para tokens já validados. 
+- **Task 2:** Implementar suporte a múltiplas instâncias. 
+  - **Subtask:** Configurar variáveis de ambiente para ambientes de produção. 
+  - **Subtask:** Testar load balancing com múltiplas réplicas. 
+### História 7 – Suporte a Multi-Tenancy
+- **Task 1:** Implementar suporte para múltiplos clientes (multi-tenancy). 
+  - **Subtask:** Criar estrutura para identificar clientes com base em claims. 
+  - **Subtask:** Adicionar validação baseada em domínio (sub). 
+---
+## Sprint 4 – Deploy e Monitoramento (2 semanas)
+### História 8 – Automatizar Deploy com Infraestrutura como Código
+- **Task 1:** Criar scripts Terraform para infraestrutura. 
+  - **Subtask:** Criar buckets S3 para armazenamento de dados. 
+  - **Subtask:** Configurar tabela DynamoDB para locks. 
+- **Task 2:** Automatizar deploy com GitHub Actions. 
+  - **Subtask:** Configurar deploy para ambiente de staging. 
+  - **Subtask:** Configurar deploy para ambiente de produção. 
+### História 9 – Adicionar Observabilidade e Resiliência
+- **Task 1:** Configurar health checks e endpoints de status. 
+  - **Subtask:** Criar rota "/health" para verificação rápida. 
+  - **Subtask:** Adicionar verificação de conexões com Redis e banco de dados. 
+- **Task 2:** Adicionar traceamento distribuído. 
+  - **Subtask:** Configurar OpenTelemetry ou X-Ray para rastreamento completo. 
+---
+## Sprint 5 – Documentação e Onboarding (2 semanas)
+### História 10 – Melhorar a Documentação do Projeto
+- **Task 1:** Criar README detalhado com instruções de uso. 
+  - **Subtask:** Incluir exemplos de requisições com CURL ou Insomnia. 
+  - **Subtask:** Adicionar diagrama de arquitetura do sistema. 
+- **Task 2:** Criar documentação automatizada com Swagger. 
+  - **Subtask:** Adicionar exemplos de uso no Swagger UI. 
+  - **Subtask:** Criar scripts de migração para facilitar setup. 
+---
+## Automação do GitHub Projects
+- **Task 1:** Criar workflows para mover cards automaticamente. 
+  - **Subtask:** Configurar triggers para mover cards de "To Do" para "In Progress" e "Done". 
+  - **Subtask:** Adicionar validações para garantir que PRs estejam associados a issues. 
+- **Task 2:** Criar templates de issues para histórias, tasks e subtasks. 
+  - **Subtask:** Criar template para histórias de usuário com descrição e critérios de aceitação. 
+  - **Subtask:** Criar template para tasks com checklist de subtasks. 
+  - **Subtask:** Criar template para bugs com detalhes de reprodução.
