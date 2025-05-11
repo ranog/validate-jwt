@@ -1,35 +1,29 @@
-name: Project Automation
+name: Project Columns Setup
 
 on:
-  issues:
-    types:
-      - opened
-      - edited
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - closed
+  workflow_dispatch:
 
 jobs:
-  automate-project:
+  setup-project-columns:
     runs-on: ubuntu-latest
     steps:
-      - name: Move issue to "To Do" on creation
-        if: github.event_name == 'issues' && github.event.action == 'opened'
+      - name: Create Project Columns
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue edit ${{ github.event.issue.number }} --add-label "To Do"
-      - name: Move issue to "In Progress" on PR open
-        if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh issue edit ${{ github.event.pull_request.number }} --add-label "In Progress"
-      - name: Move issue to "Done" on PR close
-        if: github.event_name == 'pull_request' && github.event.action == 'closed'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh issue edit ${{ github.event.pull_request.number }} --add-label "Done"
+          OWNER="ranog"
+          REPO="validate-jwt"
+          PROJECT_NUMBER=1
+          
+          # Get the project ID
+          PROJECT_ID=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+          "https://api.github.com/repos/$OWNER/$REPO/projects" | jq ".[] | select(.name == \"validate-jwt\") | .id")
+          
+          # Create columns
+          for COLUMN in "To Do" "In Progress" "Done"
+          do
+            curl -s -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{\"name\": \"$COLUMN\"}" \
+            "https://api.github.com/projects/$PROJECT_ID/columns"
+          done
