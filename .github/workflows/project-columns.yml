@@ -1,0 +1,16 @@
+name: Project Columns Setup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-project-columns:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up project columns
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh project column create --project "validate-jwt" --name "To Do"
+          gh project column create --project "validate-jwt" --name "In Progress"
+          gh project column create --project "validate-jwt" --name "Done"
