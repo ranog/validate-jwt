@@ -1,4 +1,5 @@
 name: Project Automation
+
 on:
   issues:
     types:
@@ -9,6 +10,7 @@ on:
       - opened
       - reopened
       - closed
+
 jobs:
   automate-project:
     runs-on: ubuntu-latest
